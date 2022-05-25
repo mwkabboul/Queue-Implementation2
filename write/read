@@ -1,0 +1,73 @@
+#define employee_h
+#include <iostream>
+using namespace std;
+#include <fstream>
+
+
+
+class employee
+{
+private:
+    char name[30];
+    char lastname[30];
+    int age;
+public:
+    void getData(void)
+    {
+        cout << "Enter name:"; cin.getline(name, 30);
+        cout << "Enter last name:"; cin.getline(lastname, 30);
+        cout << "Enter age:"; cin >> age;
+    }
+
+    void showData(void)
+    {
+        cout << "Name:" << name <<",lastname:"<<lastname<< ",Age:" << age << endl;
+    }
+};
+	
+  #include <iostream>
+#include <fstream>
+#include "employee.h"
+using namespace std;
+
+
+int main()
+{
+    employee e;
+
+    ofstream file;
+
+    
+    file.open("aaa.txt", ios::out);
+    if (!file)
+    {
+        cout << "Error in creating file.." << endl;
+        return 0;
+    }
+    cout << "\nFile created successfully." << endl;
+
+    
+    e.getData();    
+    file.write((char*)&e, sizeof(e));    
+
+    file.close();   
+    cout << "\nFile saved and closed succesfully." << endl;
+
+   
+    ifstream file1;
+    
+    file1.open("aaa.txt", ios::in);
+    if (!file1) {
+        cout << "Error in opening file..";
+        return 0;
+    }
+    
+    file1.read((char*)&e, sizeof(e));
+
+    
+    e.showData();
+    
+    file1.close();
+
+    return 0;
+}
